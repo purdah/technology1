@@ -18,6 +18,7 @@ public class NumberToWordsController {
 
     @PostMapping("/submit")
     public String handleInput(@RequestParam("userInput") String userInput, Model model) {
+        String response = NumberToWordsConverter.convert(userInput);
         // Pass the input to the model to display it back on the result page
         model.addAttribute("userInput", userInput);
         return "numberToWords";
