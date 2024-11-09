@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Input Form</title>
+</head>
+<body>
+<h1>Enter number to convert to text</h1>
+<form action="/submit" method="post">
+    <label for="userInput">Input:</label>
+    <input type="text" id="userInput" name="userInput" required>
+    <button type="submit">Submit</button>
+</form>
+
+<!-- Display the result only if 'userInput' exists in the model -->
+<div th:if="${userInput}">
+    <h2>Your Input</h2>
+    <p>You entered: <span th:text="${userInput}"></span></p>
+</div>
+</body>
+</html>
