@@ -33,4 +33,15 @@ class NumberToWordsConverterTest {
                   .isEqualTo("nine hundred and ninety-nine");
     }
 
+    @Test
+    public void testconvert_thousands() {
+        Assertions.assertThat(NumberToWordsConverter.convert("2000"))
+                  .isEqualTo("two thousand");
+        Assertions.assertThat(NumberToWordsConverter.convert("3050"))
+                  .isEqualTo("three thousand and fifty");
+        // TODO: how should this be 'nine thousand nine hundred and ninety-nine'
+        Assertions.assertThat(NumberToWordsConverter.convert("9999"))
+                  .isEqualTo("nine thousand and nine hundred and ninety-nine");
+    }
+
 }

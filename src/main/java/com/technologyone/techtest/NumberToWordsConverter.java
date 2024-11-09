@@ -24,16 +24,24 @@ public class NumberToWordsConverter {
     };
 
     public static String convert(String userInput) {
-        int numberToConvert = Integer.parseInt(userInput);
-        if (numberToConvert > 99 && numberToConvert < 1000) {
-            int hundreds = numberToConvert / 100;
-            int units = numberToConvert % 100;
-            if (units == 0) {
-                return wordsArray[hundreds] + " hundred";
-            } else {
-                return wordsArray[hundreds] + " hundred and " + wordsArray[units];
-            }
-        }
-        return wordsArray[numberToConvert];
+
+        int number = Integer.parseInt(userInput);
+        return convertThreeDigitBlock(number);
+
     }
+
+    private static String convertThreeDigitBlock(int number) {
+        assert number >= 0 && number < 1000;
+        if (number < 100) {
+            return wordsArray[number];
+        }
+        int hundreds = number / 100;
+        int units = number % 100;
+        if (units == 0) {
+            return wordsArray[hundreds] + " hundred";
+        } else {
+            return wordsArray[hundreds] + " hundred and " + wordsArray[units];
+        }
+    }
+
 }
