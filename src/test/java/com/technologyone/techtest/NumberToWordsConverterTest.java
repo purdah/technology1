@@ -23,5 +23,14 @@ class NumberToWordsConverterTest {
                   .isEqualTo("ninety-nine");
     }
 
+    @Test
+    public void testconvert_Hundreds() {
+        Assertions.assertThat(NumberToWordsConverter.convert("100"))
+                  .isEqualTo("one hundred");
+        Assertions.assertThat(NumberToWordsConverter.convert("305"))
+                  .isEqualTo("three hundred and five");
+        Assertions.assertThat(NumberToWordsConverter.convert("999"))
+                  .isEqualTo("nine hundred and ninety-nine");
+    }
 
 }
