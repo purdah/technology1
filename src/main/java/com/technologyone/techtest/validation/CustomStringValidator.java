@@ -1,5 +1,6 @@
 package com.technologyone.techtest.validation;
 
+import com.technologyone.techtest.TechtestApplication;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -38,7 +39,10 @@ public class CustomStringValidator implements ConstraintValidator<NumberToWordsV
         }
 
         try {
-            Float.parseFloat(value);
+            Float floatValue = Float.parseFloat(value);
+            if (floatValue.compareTo(TechtestApplication.MAX_VALUE) >= 0) {
+                return false;
+            }
         } catch (NumberFormatException e) {
             return false;
         }

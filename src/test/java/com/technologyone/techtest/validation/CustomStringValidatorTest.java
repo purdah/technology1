@@ -45,8 +45,8 @@ class CustomStringValidatorTest {
     void testValidInput() {
         assertThat(customStringValidator.isValid("1", null)).isTrue();
         assertThat(customStringValidator.isValid("1234.5678", null)).isTrue();
-        assertThat(customStringValidator.isValid("123456789012345678901234567890", null)).isTrue();
-        assertThat(customStringValidator.isValid("1234567890123456789012345678901", null))
+        assertThat(customStringValidator.isValid("1234567890.1234567890123456789", null)).isTrue();
+        assertThat(customStringValidator.isValid("1234567890.12345678901234567890", null))
                 .as("number too long").isFalse();
         assertThat(customStringValidator.isValid("12345678901234567.8901234567890", null))
                 .as("number too long").isFalse();
@@ -84,6 +84,13 @@ class CustomStringValidatorTest {
     @Test
     void testMultiplePoints() {
         assertThat(customStringValidator.isValid("0.1.2", null))
+                .as("input should be a number")
+                .isFalse();
+    }
+
+    @Test
+    void testLargestNumber() {
+        assertThat(customStringValidator.isValid("1000000000000000", null))
                 .as("input should be a number")
                 .isFalse();
     }
