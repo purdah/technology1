@@ -25,7 +25,24 @@ public class CustomStringValidator implements ConstraintValidator<NumberToWordsV
             return false;
         }
 
-        // Check for allowed characters such that the input can only represent a number
-        return value.matches("[0-9.]+");
+        if (value.endsWith(".") || value.startsWith(".")) {
+            return false;
+        }
+
+        if (value.equals("0")) {
+            return true;
+        }
+
+        if (value.startsWith("0") && value.charAt(1) != '.') {
+            return false;
+        }
+
+        try {
+            Float.parseFloat(value);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -51,4 +51,41 @@ class CustomStringValidatorTest {
         assertThat(customStringValidator.isValid("12345678901234567.8901234567890", null))
                 .as("number too long").isFalse();
     }
+
+    @Test
+    void testEdgeCasesWithLeadingZeros() {
+        assertThat(customStringValidator.isValid("01", null))
+                .as("input can not have a leading zero")
+                .isFalse();
+        assertThat(customStringValidator.isValid("001", null))
+                .as("input can not have a leading zero")
+                .isFalse();
+        assertThat(customStringValidator.isValid("01.01", null))
+                .as("input can not have a leading zero")
+                .isFalse();
+        assertThat(customStringValidator.isValid("000", null))
+                .as("input can not be all zeros")
+                .isFalse();
+        assertThat(customStringValidator.isValid("0000", null))
+                .as("input can not be all zeros")
+                .isFalse();
+        assertThat(customStringValidator.isValid("0", null))
+                .as("input can be a single zero")
+                .isTrue();
+        assertThat(customStringValidator.isValid("0.", null))
+                .as("input can be a single zero")
+                .isFalse();
+        assertThat(customStringValidator.isValid("0.1", null))
+                .isTrue();
+        assertThat(customStringValidator.isValid("0.01", null))
+                .isTrue();
+    }
+
+    @Test
+    void testMultiplePoints() {
+        assertThat(customStringValidator.isValid("0.1.2", null))
+                .as("input should be a number")
+                .isFalse();
+    }
+
 }
