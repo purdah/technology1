@@ -11,10 +11,12 @@
     <button type="submit">Submit</button>
 </form>
 
-<!-- Display the result only if 'userInput' exists in the model -->
 <div th:if="${userInput}">
     <h2>Your Input</h2>
     <p>You entered: <span th:text="${userInput}"></span></p>
+</div>
+<div th:if="${result}">
+    <p>Is converted to: <span th:text="${result}"></span></p>
 </div>
 </body>
 </html>

@@ -21,6 +21,7 @@ public class NumberToWordsController {
         String response = NumberToWordsConverter.convert(userInput);
         // Pass the input to the model to display it back on the result page
         model.addAttribute("userInput", userInput);
+        model.addAttribute("result", response);
         return "numberToWords";
     }
 
