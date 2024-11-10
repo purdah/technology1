@@ -54,9 +54,12 @@ NOTE: these commands are geared towards running on a windows machine, for linux/
       ```
     - By default, the application will be accessible at `http://localhost:8080`. You can confirm it’s running by visiting this URL in your web browser.
 
+5. **Create Docker image**
+    - (Untested) There is a `dockerfile` added to the root of the project that once you have run `gradlew.bat build` to create the artefact, can be used to build a docker image for you to run.
+
 ## Troubleshooting
 
 - **Command not recognized**: If `java` or `gradlew.bat` commands are not recognized, ensure that Java is installed and that the `JAVA_HOME` variable is set correctly.
-- **Port already in use**: If port `8080` is already occupied, modify the port configuration in the `application.properties` file located in `src/main/resources`:
+- **Port already in use**: If port `8080` is already occupied, modify the port configuration in the `application.properties` file located in `src/main/resources`, and also update the `dockerfile` to use the same port:
   ```properties
   server.port=8081
