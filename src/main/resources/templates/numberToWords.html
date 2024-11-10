@@ -6,6 +6,10 @@
 <body>
 <h1>Enter number to convert to text</h1>
 <form action="/submit" method="post">
+    <div th:if="${error != null}" style="color: red;">
+        <p th:text="${error}"></p>
+    </div>
+
     <label for="userInput">Input:</label>
     <input type="text" id="userInput" name="userInput" required>
     <button type="submit">Submit</button>
@@ -14,6 +18,7 @@
 <div th:if="${userInput}">
     <h2>Your Input</h2>
     <p>You entered: <span th:text="${userInput}"></span></p>
+
 </div>
 <div th:if="${result}">
     <p>Is converted to: <span th:text="${result}"></span></p>
