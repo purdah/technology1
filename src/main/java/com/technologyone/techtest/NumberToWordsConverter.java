@@ -1,5 +1,9 @@
 package com.technologyone.techtest;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class NumberToWordsConverter {
 
     // List of words for numbers 0 to 99
@@ -23,11 +27,37 @@ public class NumberToWordsConverter {
             "ninety-six", "ninety-seven", "ninety-eight", "ninety-nine"
     };
 
+    private static String[] thousandsArray = {
+            "", " thousand", " million", " billion", " trillion"
+    };
+
     public static String convert(String userInput) {
+        List<String> groups = splitToGroupsOfThreeDigits(userInput);
 
-        int number = Integer.parseInt(userInput);
-        return convertThreeDigitBlock(number);
+        // process each group in reverse order to break it down into its component such
+        // as 123 would be one hundred and twenty-three, then append a group word such as thousand, million etc
+        List<String> stringBuffer = new ArrayList<>();
+        for (int i = groups.size() - 1; i >= 0; i--) {
+            String group = groups.get(i);
+            int numberSegment = Integer.parseInt(group);
+            // Note that a single group is up to the first 3 digits of the so if that value is 0 then we DO want to print out zero
+            if (numberSegment != 0 || groups.size() == 1) {
+                stringBuffer.add(convertThreeDigitBlock(numberSegment) + thousandsArray[i]);
+            }
+        }
+        return stringBuffer.stream().collect(Collectors.joining(" and "));
+    }
 
+    private static List<String> splitToGroupsOfThreeDigits(String userInput) {
+        List<String> groups = new ArrayList<>();
+
+        // split to groups of 3 characters so that 2000 would become 2 strings of "2" and "000"
+        for (int i = userInput.length(); i > 0; i -= 3) {
+            int from = Math.max(i - 3, 0);
+            String substring = userInput.substring(from, i);
+            groups.add(substring);
+        }
+        return groups;
     }
 
     private static String convertThreeDigitBlock(int number) {
