@@ -4,7 +4,6 @@ import com.technologyone.techtest.validation.NumberToWordsValidator;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,12 +25,13 @@ public class NumberToWordsController {
     }
 
     @PostMapping("/submit")
-    public String handleInput(@RequestParam("userInput") @NumberToWordsValidator(min = 1, max = 30, message = "Input must be 1-30 characters and be a valid number.") String userInput, Model model) {
+    public String handleInput(@RequestParam("userInput") @NumberToWordsValidator(min = 1, max = 30, message = "Input must be 1-30 characters and be a valid number.") String userInput, RedirectAttributes redirectAttributes) {
         String response = NumberToWordsConverter.convert(userInput);
+
         // Pass the input to the model to display it back on the result page
-        model.addAttribute("userInput", userInput);
-        model.addAttribute("result", response);
-        return "numberToWords";
+        redirectAttributes.addFlashAttribute("userInput", userInput);
+        redirectAttributes.addFlashAttribute("result", response);
+        return "redirect:/input"; // Redirect back to the /input URL
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
