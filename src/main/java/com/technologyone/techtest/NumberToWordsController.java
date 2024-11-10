@@ -25,7 +25,8 @@ public class NumberToWordsController {
     }
 
     @PostMapping("/submit")
-    public String handleInput(@RequestParam("userInput") @NumberToWordsValidator(min = 1, max = 30, message = "Input must be 1-30 characters and be a valid number.") String userInput, RedirectAttributes redirectAttributes) {
+    public String handleInput(@RequestParam("userInput") @NumberToWordsValidator(min = 1, max = 30, message = "Input must be 1-30 characters and be a valid number.") String userInput,
+                              RedirectAttributes redirectAttributes) {
         String response = NumberToWordsConverter.convert(userInput);
 
         // Pass the input to the model to display it back on the result page
