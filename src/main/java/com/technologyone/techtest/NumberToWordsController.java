@@ -3,6 +3,8 @@ package com.technologyone.techtest;
 import com.technologyone.techtest.validation.NumberToWordsValidator;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,6 +20,7 @@ import java.util.Iterator;
 @Validated
 public class NumberToWordsController {
 
+    private static final Logger logger = LoggerFactory.getLogger(NumberToWordsController.class);
 
     @GetMapping("/input")
     public String showInputForm() {
@@ -44,6 +47,7 @@ public class NumberToWordsController {
         } else {
             message = "Invalid Input, please confirm the input is a valid number";
         }
+        logger.error("Exception caught: " + message, ex);
         redirectAttributes.addFlashAttribute("error", message);
         return "redirect:/input";
     }

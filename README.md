@@ -63,3 +63,5 @@ NOTE: these commands are geared towards running on a windows machine, for linux/
 - **Port already in use**: If port `8080` is already occupied, modify the port configuration in the `application.properties` file located in `src/main/resources`, and also update the `dockerfile` to use the same port:
   ```properties
   server.port=8081
+
+- **Turn on debug logging**: To enable debug logging uncomment the logging line in `application.properties`. Valid values are `ERROR`,`WARN`,`INFO`,`DEBUG`,`TRACE`
