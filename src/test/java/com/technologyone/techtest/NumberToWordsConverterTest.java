@@ -67,6 +67,7 @@ class NumberToWordsConverterTest {
         Assertions.assertThat(NumberToWordsConverter.convert("999999"))
                   .isEqualTo("nine hundred and ninety-nine thousand and nine hundred and ninety-nine");
     }
+
     @Test
     public void testconvert_Millions() {
         Assertions.assertThat(NumberToWordsConverter.convert("2000000"))
@@ -78,5 +79,20 @@ class NumberToWordsConverterTest {
         Assertions.assertThat(NumberToWordsConverter.convert("9999999"))
                   .isEqualTo("nine million and nine hundred and ninety-nine thousand and nine hundred and ninety-nine");
     }
+
+    @Test
+    public void testconvert_decimals() {
+        Assertions.assertThat(NumberToWordsConverter.convert("0.1"))
+                  .isEqualTo("zero point one");
+        Assertions.assertThat(NumberToWordsConverter.convert("0.12"))
+                  .isEqualTo("zero point one two");
+        Assertions.assertThat(NumberToWordsConverter.convert("0.123"))
+                  .isEqualTo("zero point one two three");
+        Assertions.assertThat(NumberToWordsConverter.convert("2.2"))
+                  .isEqualTo("two point two");
+        Assertions.assertThat(NumberToWordsConverter.convert("9999999.1"))
+                  .isEqualTo("nine million and nine hundred and ninety-nine thousand and nine hundred and ninety-nine point one");
+    }
+
 
 }

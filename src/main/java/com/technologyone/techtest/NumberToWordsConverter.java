@@ -31,21 +31,45 @@ public class NumberToWordsConverter {
             "", " thousand", " million", " billion", " trillion"
     };
 
+    /**
+     * Convert a string such as "123.45" into a plain text version "one hundred and twenty-three point four five
+     * @param userInput The input string to convert
+     * @return A string representation of the input number
+     */
     public static String convert(String userInput) {
+
+        String result;
+        if (userInput.contains(".")) {
+            String[] decimalAndFractional = userInput.split("\\.");
+            String decimal = decimalAndFractional[0];
+            String fractional = decimalAndFractional[1];
+
+            String decimalResult = convertDecimal(decimal);
+            String fractionalResult = convertFractional(fractional);
+            result = decimalResult + " point " + fractionalResult;
+        } else {
+            result = convertDecimal(userInput);
+        }
+
+        return result;
+    }
+
+    private static String convertDecimal(String userInput) {
         List<String> groups = splitToGroupsOfThreeDigits(userInput);
 
         // process each group in reverse order to break it down into its component such
         // as 123 would be one hundred and twenty-three, then append a group word such as thousand, million etc
-        List<String> stringBuffer = new ArrayList<>();
+        List<String> threeDigitGroupsAsStrings = new ArrayList<>();
         for (int i = groups.size() - 1; i >= 0; i--) {
             String group = groups.get(i);
             int numberSegment = Integer.parseInt(group);
-            // Note that a single group is up to the first 3 digits of the so if that value is 0 then we DO want to print out zero
+            // Note that a single group is up to the first 3 digits of the so if that value is 0 then we DO want to print
+            // out zero and that is why if there is only one group we always print
             if (numberSegment != 0 || groups.size() == 1) {
-                stringBuffer.add(convertThreeDigitBlock(numberSegment) + thousandsArray[i]);
+                threeDigitGroupsAsStrings.add(convertThreeDigitBlock(numberSegment) + thousandsArray[i]);
             }
         }
-        return stringBuffer.stream().collect(Collectors.joining(" and "));
+        return threeDigitGroupsAsStrings.stream().collect(Collectors.joining(" and "));
     }
 
     private static List<String> splitToGroupsOfThreeDigits(String userInput) {
@@ -72,6 +96,22 @@ public class NumberToWordsConverter {
         } else {
             return wordsArray[hundreds] + " hundred and " + wordsArray[units];
         }
+    }
+
+
+    /**
+     * This method takes a string of numbers such as 1234 and lists those numbers as is: "one two three four"
+     * @param fractional
+     * @return
+     */
+    private static String convertFractional(String fractional) {
+        List<String> stringBuffer = new ArrayList<>();
+        for (int i = 0; i < fractional.length(); i++) {
+            char ch = fractional.charAt(i);
+            int numericValue = ch - '0';  // This is a little trick to convert a char between 0-9 into its integer equivalent.
+            stringBuffer.add(wordsArray[numericValue]);
+        }
+        return stringBuffer.stream().collect(Collectors.joining(" "));
     }
 
 }
